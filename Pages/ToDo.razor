@@ -1,0 +1,71 @@
+﻿@page "/todo"
+
+<div class = "container-fluid">
+    <div class = "row">
+        <div class="col">
+            <h1 class="text-center">ToDo</h1>
+            <h2 class="text-center">Still needs to be done (@todos.Count(item => !item.IsDone))</h2>
+
+            <table class = "table table-striped">
+                <thead class = "table-dark">
+                    <tr>
+                        <th scope = "col">Title</th>
+                        <th scope = "col">Is Done</th>
+                        <th scope = "col"></th>
+                    </tr>
+                </thead>
+                @foreach (var item in todos)
+                {
+                    <tbody>
+                        <tr>
+                             <td>
+                                 <div style="@(item.IsDone ? "color:green; text-decoration:line-through;" : "color:red")">
+                                 @item.Title
+                                 </div>
+                             </td>
+                             <td>
+                                <input type="checkbox" @bind = "item.IsDone" />
+                             </td>
+                             <td>
+                                 <button class="btn btn-danger" @onclick ="(() => DeleteToDo(item))">Delete</button>
+                             </td>
+                        </tr>
+                   </tbody>
+                }
+                
+            </table>
+            <div class="row">
+                <div class="col">
+                    <input class="form-control" placeholder = "Type something todo" @bind="newTodo"/>
+                </div>
+                <div class="col">
+                    <button class="btn btn-success" @onclick = "AddTodo"> Add todo</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+    private IList<ToDoItem> todos = new List<ToDoItem>();
+    private string newTodo;
+
+    private void AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            // Adding new task to list
+            todos.Add(new ToDoItem{Title = newTodo});
+
+            // Clear our input
+            newTodo = string.Empty;
+        }
+    }
+    // If method has parameters, we use '()=>' expression
+
+    private void DeleteToDo(ToDoItem deletedItem)
+    {
+        todos.Remove(deletedItem);
+    }
+}
