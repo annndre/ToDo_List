@@ -44,15 +44,18 @@
                 }
                 
             </table>
+
             <div class="row">
                 <div class="col">
                     <input class="form-control" placeholder = "Type something todo" @bind="newTodo"/>
                 </div>
-                <div class="col">
+                  <div class="col">
+                    <input type ="date" class="form-control" @bind="CurrentDate"/>
+               </div>
+                  <div class="col">
                     <button class="btn btn-success" @onclick = "AddTodo"> Add todo</button>
-                </div>
+               </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -60,10 +63,16 @@
 @code {
     private IEnumerable<ToDoItem> todos = new List<ToDoItem>();
 
+    private DateTime ? CurrentDate;
+
     //List initializing ; to pick up all data from database
     protected override void OnInitialized()
     {
         todos = repository.GetAllItems();
+
+        // Set the Current date
+
+        CurrentDate = DateTime.Now;
     }
 
     private string newTodo;
@@ -72,6 +81,7 @@
     {
         if (!string.IsNullOrWhiteSpace(newTodo))
         {
+           
             // Adding new task to list
 
             //todos.Add(new ToDoItem{Title = newTodo});
@@ -82,6 +92,7 @@
             newTodo = string.Empty;
         }
     }
+
     // If method has parameters, we use '()=>' expression
 
     private void DeleteToDo(int id)
