@@ -13,7 +13,8 @@
                     <tr>
                         <th scope = "col">Title</th>
                         <th scope = "col">Is Done</th>
-                        <th scope = "col"></th>
+                        <th scope = "col">Date</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 @foreach (var item in todos)
@@ -35,6 +36,10 @@
                                     <input type="checkbox" checked value = "item.IsDone" @onchange = "(()=>StatusChanger(item))"/>
                                  }
                             </td>
+                            <td>
+                                <div> @item.Date </div>
+                            </td>
+                            
                              <td>
                                  <button class="btn btn-danger" @onclick ="(() => DeleteToDo(item.Id))">Delete</button>
                                   <button class = "btn btn-primary">Edit Title</button>
@@ -50,10 +55,10 @@
                     <input class="form-control" placeholder = "Type something todo" @bind="newTodo"/>
                 </div>
                   <div class="col">
-                    <input type ="date" class="form-control" @bind="CurrentDate"/>
+                    <input type ="date" class="form-control" @bind="Date"/>
                </div>
                   <div class="col">
-                    <button class="btn btn-success" @onclick = "AddTodo"> Add todo</button>
+                    <button class="btn btn-success" @onclick = "AddTodo" > Add todo</button>
                </div>
             </div>
         </div>
@@ -63,7 +68,8 @@
 @code {
     private IEnumerable<ToDoItem> todos = new List<ToDoItem>();
 
-    private DateTime ? CurrentDate;
+    private DateTime? Date;
+
 
     //List initializing ; to pick up all data from database
     protected override void OnInitialized()
@@ -72,7 +78,8 @@
 
         // Set the Current date
 
-        CurrentDate = DateTime.Now;
+       // Date = DateTime.Today; 
+
     }
 
     private string newTodo;
@@ -81,17 +88,19 @@
     {
         if (!string.IsNullOrWhiteSpace(newTodo))
         {
-           
+
             // Adding new task to list
 
             //todos.Add(new ToDoItem{Title = newTodo});
 
-            repository.AddTodo(newTodo);
+            repository.AddTodo(newTodo,Date);
+           // repository.AddTodo(Date.ToString());
 
             // Clear our input
             newTodo = string.Empty;
         }
     }
+
 
     // If method has parameters, we use '()=>' expression
 

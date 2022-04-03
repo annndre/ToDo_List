@@ -15,15 +15,23 @@ namespace ToDo_List.Data.Repository
             _context = context;
         }
 
-        public void AddTodo(string todoName)
+        public void AddTodo(string todoName,DateTime? NewToDodate)
         {
             ToDoItem newItem = new ToDoItem()
             {
                 Title = todoName,
                 IsDone = false,
+                Date = NewToDodate,
             };
 
+
             _context.toDoItems.Add(newItem);
+            _context.SaveChanges();
+        }
+
+        public void Date(DateTime Date)
+        {
+            _context.Add(Date);
             _context.SaveChanges();
         }
 
@@ -41,6 +49,7 @@ namespace ToDo_List.Data.Repository
         public IEnumerable<ToDoItem> GetAllItems()
         {
             return _context.toDoItems;
+           
         }
 
         public void ValueChanged(ToDoItem changedItem)

@@ -9,8 +9,9 @@ namespace ToDo_List.Data.Repository
     public interface IRepository
     {
         IEnumerable<ToDoItem> GetAllItems();
-        void AddTodo(string todoName);
+        void AddTodo(string todoName,DateTime? NewToDodate);
         void ValueChanged(ToDoItem changedItem);
+        void Date(DateTime Date);
         void DeleteItem(int id);
     } 
 }
