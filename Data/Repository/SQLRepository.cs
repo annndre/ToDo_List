@@ -22,6 +22,7 @@ namespace ToDo_List.Data.Repository
                 Title = todoName,
                 IsDone = false,
                 Date = NewToDodate,
+               // Time = NewToDotime,
             };
 
 
@@ -34,6 +35,11 @@ namespace ToDo_List.Data.Repository
             _context.Add(Date);
             _context.SaveChanges();
         }
+        //public void Time(TimeOnly Time)
+        //{
+        //    _context.Add(Time);
+        //    _context.SaveChanges();
+        //}
 
         public void DeleteItem(int id)
         {

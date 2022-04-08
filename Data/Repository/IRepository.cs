@@ -12,6 +12,7 @@ namespace ToDo_List.Data.Repository
         void AddTodo(string todoName,DateTime? NewToDodate);
         void ValueChanged(ToDoItem changedItem);
         void Date(DateTime Date);
+       // void Time(TimeOnly Time);
         void DeleteItem(int id);
     } 
 }

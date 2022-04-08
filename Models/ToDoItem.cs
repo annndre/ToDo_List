@@ -11,5 +11,6 @@ namespace ToDo_List.Models
         public string Title { get; set; }
         public bool IsDone { get; set; }
         public DateTime? Date { get; internal set; }
+       // public TimeOnly Time { get; internal set; }
     }
 }

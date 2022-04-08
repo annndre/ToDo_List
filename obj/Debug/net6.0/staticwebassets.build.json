@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "uOZfK0bKzjfP0QMHTg1x9ydLQZIdPrXtWdSZkCXF7W8=",
+  "Hash": "1yO6/DrCkmMFLrpZsZvw9cNrEukgY4sG3yl72lpyaV8=",
   "Source": "ToDo_List",
   "BasePath": "_content/ToDo_List",
   "Mode": "Default",
@@ -253,6 +253,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\vs code 2022\\C# project\\ToDo_List\\wwwroot\\css\\Styles\\ToDoStyle.css",
+      "SourceId": "ToDo_List",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\vs code 2022\\C# project\\ToDo_List\\wwwroot\\",
+      "BasePath": "_content/ToDo_List",
+      "RelativePath": "css/Styles/ToDoStyle.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Styles\\ToDoStyle.css"
     },
     {
       "Identity": "C:\\vs code 2022\\C# project\\ToDo_List\\wwwroot\\favicon.ico",
