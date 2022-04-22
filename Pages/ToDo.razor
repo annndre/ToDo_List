@@ -2,7 +2,6 @@
 
 @page "/todo"
 
-<link rel="stylesheet" href="css/Styles/ToDoStyle.css"/>
 
 <div class = "container-fluid">
     <div class = "row">
@@ -15,8 +14,9 @@
                     <tr>
                         <th scope = "col">Title</th>
                         <th scope = "col">Is Done</th>
-                        <th scope = "col">Date</th>
-                        <th scope="col"></th>
+                        <th scope = "col">Date&Time</th>
+                        <th scope = "col">Location &nbsp; <i class="far fa-map-marked-alt"></i></th>
+                        <th></th>
                     </tr>
                 </thead>
                 @foreach (var item in todos)
@@ -24,7 +24,7 @@
                     <tbody style="font-size:1.2em;">
                         <tr>
                              <td>
-                                 <div style="@(item.IsDone ? "color:green; text-decoration:line-through;" : "color:red")">
+                                 <div id="ToDoItem" style="@(item.IsDone ? "color:green; text-decoration:line-through;" : "color:red")">
                                  @item.Title
                                  </div>
                              </td>
@@ -39,7 +39,10 @@
                                  }
                             </td>
                             <td>
-                                <div> @item.Date </div>
+                                 @item.Date
+                            </td>
+                            <td>
+                               <i class="fa fa-map-marker-alt"></i> @item.Location
                             </td>
                             
                              <td>
@@ -57,11 +60,27 @@
                     <input class="form-control" placeholder = "Type something todo" @bind="newTodo"/>
                 </div>
                   <div class="col">
-                    <input type ="date" name="ToDoStart" class="form-control" @bind="Date" @bind:format="yyyy-MM-dd" min="@DateTime.Today.ToString(format:"yyyy-MM-dd")" />
+                    <input type ="datetime-local" name="ToDoStart" class="form-control" @bind="Date" min="@DateTime.Now.ToString(format:"yyyy-MM-ddTHH:mm")"/>
                </div>
                <div class="col">
-                   <input type="time" class="form-control" @bind="Time" />
+     @* @bind:format="yyyy-MM-dd" min="@DateTime.Today.ToString(format:"yyyy-MM-dd")"*@
+
+              <select class="form-select form-control" aria-label="Default select example"  @bind="Location">
+                  <option value="0"><i>Choose one option here:</i></option>
+                 <option value="Home">Home &#127968;</option>
+                 <option value="School">School  &#127979;</option>
+                 <option value="University">University &#x1F393;</option>
+                 <option value="My district">My district &#127747;</option>
+                 <option value="City Center">City center &#127750;</option>
+                 <option value="Village">Village &#9978;</option>
+                 <option value="Another country">Another country  &#127758;</option>
+                @* <option value="Another location"><input type="text" class="form-control" placeholder="Another location"/></option>
+              *@
+          </select>
                </div>
+              @* <div class="col">
+                   <input type="time" class="form-control" @bind="Time" />
+               </div>*@
                <div class="col">
                     <button class="btn btn-success" @onclick = "AddTodo" > Add todo</button>
                </div>
@@ -76,7 +95,9 @@
 
     private DateTime? Date;
 
-    private TimeOnly Time;
+    // private TimeOnly? Time;
+
+    private string? Location;
 
 
     //List initializing ; to pick up all data from database
@@ -84,30 +105,31 @@
     {
         todos = repository.GetAllItems();
 
-        // Set the Current date
-        Date = DateTime.Today;
-
+        //Time = TimeOnly.FromDateTime(DateTime.Now);
     }
 
     private string newTodo;
 
     private void AddTodo()
     {
-        if (!string.IsNullOrWhiteSpace(newTodo))
+        if (!string.IsNullOrWhiteSpace(newTodo) && !string.IsNullOrWhiteSpace(Location))
         {
 
             // Adding new task to list
 
             //todos.Add(new ToDoItem{Title = newTodo});
-
-            repository.AddTodo(newTodo,Date);
-            // repository.AddTodo(Date.ToString());
-
+            if ((Date != null)&&(Location != "0"))
+            {
+                repository.AddTodo(newTodo, Date,Location);
+                
+            }
+            
             // Clear our input
             newTodo = string.Empty;
 
             // Set the current Date again
-            Date = DateTime.Today;
+
+           Date = DateTime.Today;
 
         }
     }

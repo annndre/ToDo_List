@@ -16,7 +16,7 @@ namespace ToDo_List.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsDone = table.Column<bool>(type: "bit", nullable: false),
-                    Date = table.Column<DateOnly>(type:"date",nullable:true),
+                    Date = table.Column<DateTime>(type:"datetime",nullable:false),
                     Time = table.Column<TimeOnly>(type:"time",nullable:true),
                 },
                 constraints: table =>

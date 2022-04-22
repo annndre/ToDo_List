@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "1yO6/DrCkmMFLrpZsZvw9cNrEukgY4sG3yl72lpyaV8=",
+  "Hash": "kDGAAeVjNOYYi1wPf98ltTxuM2APTVcChKtc290sUjw=",
   "Source": "ToDo_List",
   "BasePath": "_content/ToDo_List",
   "Mode": "Default",
@@ -287,6 +287,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\vs code 2022\\C# project\\ToDo_List\\wwwroot\\JS\\ButtonListener.js",
+      "SourceId": "ToDo_List",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\vs code 2022\\C# project\\ToDo_List\\wwwroot\\",
+      "BasePath": "_content/ToDo_List",
+      "RelativePath": "JS/ButtonListener.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\JS\\ButtonListener.js"
     }
   ]
 }

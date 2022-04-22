@@ -15,14 +15,14 @@ namespace ToDo_List.Data.Repository
             _context = context;
         }
 
-        public void AddTodo(string todoName,DateTime? NewToDodate)
+        public void AddTodo(string todoName,DateTime? NewToDodate,string? LocationItem)
         {
             ToDoItem newItem = new ToDoItem()
             {
                 Title = todoName,
                 IsDone = false,
                 Date = NewToDodate,
-               // Time = NewToDotime,
+                Location = LocationItem,
             };
 
 
@@ -30,16 +30,16 @@ namespace ToDo_List.Data.Repository
             _context.SaveChanges();
         }
 
-        public void Date(DateTime Date)
+        public void Date(DateTime? Date)
         {
             _context.Add(Date);
             _context.SaveChanges();
         }
-        //public void Time(TimeOnly Time)
-        //{
-        //    _context.Add(Time);
-        //    _context.SaveChanges();
-        //}
+        public void Location(string? LocationItem)
+        {
+            _context.Add(LocationItem);
+            _context.SaveChanges();
+        }
 
         public void DeleteItem(int id)
         {
