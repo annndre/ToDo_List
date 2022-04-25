@@ -64,9 +64,10 @@
                </div>
                <div class="col">
      @* @bind:format="yyyy-MM-dd" min="@DateTime.Today.ToString(format:"yyyy-MM-dd")"*@
-
-              <select class="form-select form-control" aria-label="Default select example"  @bind="Location">
-                  <option value="0"><i>Choose one option here:</i></option>
+     
+      
+              <select oninput="Selection()" id="select1" class="form-select form-control"  aria-label="Default select"  @bind="Location"  >
+                  <option value="0">Choose one option here:</option>
                  <option value="Home">Home &#127968;</option>
                  <option value="School">School  &#127979;</option>
                  <option value="University">University &#x1F393;</option>
@@ -74,15 +75,18 @@
                  <option value="City Center">City center &#127750;</option>
                  <option value="Village">Village &#9978;</option>
                  <option value="Another country">Another country  &#127758;</option>
+                 <option value="1" id="option1" >-Choose another location-</option>
                 @* <option value="Another location"><input type="text" class="form-control" placeholder="Another location"/></option>
               *@
           </select>
+          <input class="form-control" id="input1" hidden="hidden" placeholder="Enter another location" oninput = "Input()"/>
+          
                </div>
               @* <div class="col">
                    <input type="time" class="form-control" @bind="Time" />
                </div>*@
                <div class="col">
-                    <button class="btn btn-success" @onclick = "AddTodo" > Add todo</button>
+                    <button class="btn btn-success" @onclick="AddTodo" id="AddTodo" onmouseover="HideInput()" > Add todo</button>
                </div>
             </div>
         </div>
@@ -121,15 +125,16 @@
             if ((Date != null)&&(Location != "0"))
             {
                 repository.AddTodo(newTodo, Date,Location);
-                
+
             }
-            
+
             // Clear our input
             newTodo = string.Empty;
 
             // Set the current Date again
 
-           Date = DateTime.Today;
+            Date = DateTime.Today;
+           
 
         }
     }

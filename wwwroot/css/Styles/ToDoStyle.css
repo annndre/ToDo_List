@@ -31,3 +31,6 @@ input[type="datetime-local"]{
     font-family:'Times New Roman';
     font-size:1.3em;
 }
+#input1 {
+    margin:10px;
+}
