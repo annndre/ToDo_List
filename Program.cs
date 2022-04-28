@@ -20,6 +20,8 @@ string connString = builder.Configuration.GetConnectionString("AppDb");
 builder.Services.AddDbContext<DB>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("AppDb"));
+    //string sql = "SELECT toDoItems.Date FROM toDoItems ";
+    
 });
 
 builder.Services.AddRazorPages();
@@ -49,3 +51,5 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();
+
+

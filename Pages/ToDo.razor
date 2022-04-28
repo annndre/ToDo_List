@@ -4,10 +4,18 @@
 
 
 <div class = "container-fluid">
+
+       <div hidden class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
     <div class = "row">
         <div class="col">
             <h1 class="text-center">ToDo</h1>
             <h2 class="text-center text-primary">Still needs to be done (@todos.Count(item => !item.IsDone))</h2>
+            <h3 class="text-left">Progress in your affairs</h3>
+            <progress id="ToDoProgress" max="@todos.ToArray().Length" value="@todos.Count(item => item.IsDone)"> </progress>
 
             <table class = "table table-striped">
                 <thead class = "table-dark" style="font-size:1.4em;">
@@ -23,16 +31,28 @@
                 {
                     <tbody style="font-size:1.2em;">
                         <tr>
-                             <td>
-                                 <div id="ToDoItem" style="@(item.IsDone ? "color:green; text-decoration:line-through;" : "color:red")">
-                                 @item.Title
-                                 </div>
-                             </td>
+                            <td>
+                                @if (DateTime.Now < item.Date) {
+                                    <div id="ToDoItem" style="@(item.IsDone ? "color:green; text-decoration:line-through;" : "color:red")">
+                                        @item.Title
+                                    </div>
+                                }
+                                else
+                                {
+                                    //item.IsDone = false;
+                                    <div id="ToDoItem" style="opacity:0.6; background-color:orange;">
+                                       <span style=" @(item.IsDone ? "color:green; text-decoration:line-through;" : "color:red")"> @item.Title</span> &nbsp; <span style="opacity:0.7;color:lightgray; font-family:'Comic Sans MS';">Expired</span>
+                                    </div>
+                                }
+                            </td>
                              <td>
                                  @if(item.IsDone == false)
                                  {
                                     <input type="checkbox" value = "item.IsDone" @onchange = "(()=>StatusChanger(item))"/>
-                                 }
+                                }
+                                 else if(item.Date < DateTime.Now){
+                                     <input type="checkbox" value="item.IsDone" disabled="disabled"/>
+                                }
                                  else
                                  {
                                     <input type="checkbox" checked value = "item.IsDone" @onchange = "(()=>StatusChanger(item))"/>
@@ -86,7 +106,7 @@
                    <input type="time" class="form-control" @bind="Time" />
                </div>*@
                <div class="col">
-                    <button class="btn btn-success" @onclick="AddTodo" id="AddTodo" onmouseover="HideInput()" > Add todo</button>
+                    <button class="btn btn-success" @onclick="AddTodo" id="AddTodo" onmouseout="HideInput()" > Add todo</button>
                </div>
             </div>
         </div>
@@ -102,6 +122,7 @@
     // private TimeOnly? Time;
 
     private string? Location;
+    //private string sql = "SELECT toDoItem.Date FROM toDoItems";
 
 
     //List initializing ; to pick up all data from database
@@ -134,7 +155,7 @@
             // Set the current Date again
 
             Date = DateTime.Today;
-           
+
 
         }
     }
@@ -153,5 +174,9 @@
     {
         changedItem.IsDone = !changedItem.IsDone;
         repository.ValueChanged(changedItem);
+    }
+    private void DateAnalitics(DateTime? Date)
+    {
+       // repository.selectDate(Date);
     }
 }

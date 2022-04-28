@@ -1,5 +1,4 @@
 ﻿
-
 function Selection() {
     var selected = document.getElementById("select1");
     if (selected.value == 1) {
@@ -26,7 +25,7 @@ function HideInput() {
     var selected = document.getElementById("select1");
     var input = document.getElementById("input1");
     var option = document.getElementById("option1");
-    hide.addEventListener('mouseover',function () {
+    hide.addEventListener('mouseout',function () {
         input.setAttribute("hidden", true);
         input.value = null;
        // alert("hide");
@@ -35,4 +34,16 @@ function HideInput() {
     
 }
 
+function move() {
+    var moving = document.getElementById("ToDoProgress");
+    
+}
 
+//function HideCheckbox() {
+//    var ToDoItem = document.getElementById("ToDoItem");
+//    var checkbox = document.querySelector(checkbox);
+
+//    if (ToDoItem.style.background == 'orange') {
+//        checkbox.setAttribute("disabled", true);
+//    }
+//}

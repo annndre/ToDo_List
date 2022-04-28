@@ -13,6 +13,7 @@ namespace ToDo_List.Data.Repository
         public SQLRepository(DB context)
         {
             _context = context;
+           
         }
 
         public void AddTodo(string todoName,DateTime? NewToDodate,string? LocationItem)
@@ -51,6 +52,16 @@ namespace ToDo_List.Data.Repository
                 _context.SaveChanges();
             }
         }
+        //public void SelectDate(DateTime? Date)
+        //{
+        //    var selectedItem = _context.toDoItems.Find(Date);
+        //    //IEnumerable<DateTime>query = _context.toDoItems.SelectMany(ToDoItems=>ToDoItems.Date);
+        //    if (selectedItem != null)
+        //    {
+        //      var p =  _context.toDoItems.Select(ToDoItems=>ToDoItems.Date);
+                
+        //    }
+        //}
 
         public IEnumerable<ToDoItem> GetAllItems()
         {
@@ -67,5 +78,6 @@ namespace ToDo_List.Data.Repository
 
             _context.SaveChanges();
         }
+        
     }
 }
