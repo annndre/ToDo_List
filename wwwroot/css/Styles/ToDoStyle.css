@@ -36,6 +36,6 @@ input[type="datetime-local"]{
 }
 #ToDoProgress{
     background-color:forestgreen;
-    height:20px;
+    height:15px;
     width:100%;
 }

@@ -51,7 +51,8 @@
                                     <input type="checkbox" value = "item.IsDone" @onchange = "(()=>StatusChanger(item))"/>
                                 }
                                  else if(item.Date < DateTime.Now){
-                                     <input type="checkbox" value="item.IsDone" disabled="disabled"/>
+                                     <input type="checkbox" checked="checked" value="item.IsDone"  disabled="disabled" @onchange = "(()=>StatusChanger(item))" />
+                                     
                                 }
                                  else
                                  {
