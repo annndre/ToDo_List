@@ -2,6 +2,7 @@
 
 @page "/todo"
 
+@inject ToDo_List.Data.Email_controller Email_controller;
 
 <div class = "container-fluid">
 
@@ -33,12 +34,25 @@
                         <tr>
                             <td>
                                 @if (DateTime.Now < item.Date) {
+                                   
                                     <div id="ToDoItem" style="@(item.IsDone ? "color:green; text-decoration:line-through;" : "color:red")">
                                         @item.Title
                                     </div>
                                 }
                                 else
                                 {
+                                    if (item.Sended_mail == 0)
+                                    {
+                                         repository.Sended_email(item.Id);
+                                      var s = Email_controller.Send_email("andr.sosn@gmail.com",item.Id);
+                                        
+                       
+                                       // if(s == true)
+                                        //{
+                                          //  repository.Sended_email(item.Id);
+                                       // }
+
+                                    }
                                     //item.IsDone = false;
                                     <div id="ToDoItem" style="opacity:0.6; background-color:orange;">
                                        <span style=" @(item.IsDone ? "color:green; text-decoration:line-through;" : "color:red")"> @item.Title</span> &nbsp; <span style="opacity:0.7;color:lightgray; font-family:'Comic Sans MS';">Expired</span>
@@ -48,15 +62,15 @@
                              <td>
                                  @if(item.IsDone == false)
                                  {
-                                    <input type="checkbox" value = "item.IsDone" @onchange = "(()=>StatusChanger(item))"/>
+                                    <input  type="checkbox" id="checkbox"  value = "item.IsDone" @onchange = "(()=>StatusChanger(item))"/>
                                 }
                                  else if(item.Date < DateTime.Now){
-                                     <input type="checkbox" checked="checked" value="item.IsDone"  disabled="disabled" @onchange = "(()=>StatusChanger(item))" />
+                                     <input  type="checkbox" id="checkbox" checked="checked" value="item.IsDone"  disabled="disabled" @onchange = "(()=>StatusChanger(item))" />
                                      
                                 }
                                  else
                                  {
-                                    <input type="checkbox" checked value = "item.IsDone" @onchange = "(()=>StatusChanger(item))"/>
+                                    <input type="checkbox" id="checkbox"  checked value = "item.IsDone" @onchange = "(()=>StatusChanger(item))"/>
                                  }
                             </td>
                             <td>
@@ -65,11 +79,14 @@
                             <td>
                                <i class="fa fa-map-marker-alt"></i> @item.Location
                             </td>
-                            
-                             <td>
+                           
+                             <td>  
+                                 <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="When added:">
+                                    <i class="fas fa-calendar-edit"></i>
+                                 </button>
                                  <button class="btn btn-danger" @onclick ="(() => DeleteToDo(item.Id))">Delete</button>
-                                  <button class = "btn btn-primary">Edit Title</button>
                              </td>
+                             
                         </tr>
                    </tbody>
                 }
@@ -175,6 +192,8 @@
     {
         changedItem.IsDone = !changedItem.IsDone;
         repository.ValueChanged(changedItem);
+       // repository.Sended_mail(348);
+       // repository.Sended_email(changedItem.Id);
     }
     private void DateAnalitics(DateTime? Date)
     {

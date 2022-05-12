@@ -41,7 +41,18 @@ namespace ToDo_List.Data.Repository
             _context.Add(LocationItem);
             _context.SaveChanges();
         }
+        public int Sended_mail(int id)
+        {
+            var item = _context.toDoItems.Find(id);
+            var result = item.Sended_mail;
 
+            return result;
+        }
+        public void Sended_email(int id)
+        {
+            var item = _context.toDoItems.Find(id);
+            item.Sended_mail = 1;
+        }
         public void DeleteItem(int id)
         {
             var deletedItem = _context.toDoItems.Find(id);

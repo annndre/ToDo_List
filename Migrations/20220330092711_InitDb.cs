@@ -18,6 +18,7 @@ namespace ToDo_List.Migrations
                     IsDone = table.Column<bool>(type: "bit", nullable: false),
                     Date = table.Column<DateTime>(type:"datetime",nullable:false),
                     Time = table.Column<TimeOnly>(type:"time",nullable:true),
+                    Sended_mail = table.Column<int>(type:"int",nullable:true),
                 },
                 constraints: table =>
                 {

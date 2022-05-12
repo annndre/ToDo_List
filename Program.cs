@@ -13,6 +13,7 @@ using ToDo_List.Data;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using ToDo_List.Data.Repository;
 
+
 var builder = WebApplication.CreateBuilder(args);
 string connString = builder.Configuration.GetConnectionString("AppDb");
 
@@ -30,6 +31,8 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<IRepository, SQLRepository>();
 
 builder.Services.AddSingleton<WeatherForecastService>();
+
+builder.Services.AddSingleton<Email_controller>();
 
 var app = builder.Build();
 

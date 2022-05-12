@@ -14,5 +14,7 @@ namespace ToDo_List.Models
 
         //public TimeOnly? Time { get; internal set; }
         public string? Location { get; set; }
+        public int Sended_mail { get; set; }
+        //public void  Sended_email{get;set;}
     }
 }

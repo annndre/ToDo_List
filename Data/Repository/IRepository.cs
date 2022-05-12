@@ -15,5 +15,7 @@ namespace ToDo_List.Data.Repository
         //void Time(TimeOnly? Time);
         void Location(string? Location);
         void DeleteItem(int id);
+        int Sended_mail(int id);
+        void Sended_email(int id);
     } 
 }
