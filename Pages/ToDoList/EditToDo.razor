@@ -1,0 +1,103 @@
+﻿@page "/edit/{ToDoId:int}"
+@page "/edit/{ToDoId:int}/{ToDoTitle}"
+
+@inject ToDo_List.Data.Repository.IRepository repository;
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+    <h1 class="text-info text-right text-uppercase">Edit todo</h1>
+      </div>
+    </div>
+   <div class="row">
+    <div class="col-6">
+       @if (Title is not null)
+       {
+           <EditForm Model="Title" OnValidSubmit="Edit">
+               <DataAnnotationsValidator/>
+                <div class="form-group">
+                    <label>Title name:</label>
+                    @*<input type="text" value="@ToDoId" />*@
+                 <div>
+                   <InputText class="form-control" @bind-Value="Title.Title" />
+                   <ValidationMessage For="(() => Title.Title)" />
+                 </div>
+               <div class="row">
+                <div class="form-group">
+                    <label>Time:</label>
+                    <input type="datetime-local"/>
+                </div>
+               </div>
+             </div>
+            <div style="margin:10px;">
+              <button class="btn btn-outline-success" @onclick="(()=>UpdateToDo())">Save</button>
+            </div>
+           </EditForm>
+       }
+        </div>
+     <div class="col-6">
+            
+                <div class="text-align-content-center py-2 @cssClass">@message</div>
+                @foreach(var item in todos)
+                {
+                    <div class="row justify-content-center m-1 text-white">
+                        <div class="col-6 bg-info">
+                            ID: @item.Id
+                        </div>
+                        <div class="col-6 bg-info">
+                            Title:@item.Title
+                        </div>
+                    </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public int ToDoId { get; set; }
+    [Parameter] public string ToDoTitle { get; set; }
+
+    ToDoItem Title = new();
+
+    //public EditToDo(ToDoItem ToDoTitle)
+    //{
+    //    Title = ToDoTitle;
+    //}
+
+    string message = string.Empty;
+    string cssClass = string.Empty;
+
+    IEnumerable<ToDoItem> todos = new List<ToDoItem>();
+
+
+    protected override void OnInitialized()
+    {
+        Title = repository.GetToDoById(ToDoId);
+       
+    }
+
+    void Edit()
+    {
+        
+        var result = repository.EditToDo(Title);
+        if (result == true)
+        {
+            cssClass = "alert alert-success";
+            message = "Editing success!";
+            UpdateToDo();
+            //Console.WriteLine(Title);
+        }
+        else
+        {
+            cssClass = "alert alert-danger";
+            message = "Editing failed!";
+        }
+
+    }
+    void UpdateToDo()
+    {
+        //IEnumerable<ToDoItem> todos = new List<ToDoItem>();
+        todos = new List<ToDoItem>();
+        todos = repository.GetAllItems();
+    }
+}

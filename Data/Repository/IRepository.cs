@@ -9,10 +9,14 @@ namespace ToDo_List.Data.Repository
     public interface IRepository
     {
         IEnumerable<ToDoItem> GetAllItems();
-        void AddTodo(string todoName,DateTime? NewToDodate,string? LocationItem);
+
+        ToDoItem GetToDoById(int id);
+        bool EditToDo(ToDoItem editedToDo);
+        void AddTodo(string todoName,DateTime? NewToDodate, DateTime? NewCurrentDate, string? LocationItem);
         void ValueChanged(ToDoItem changedItem);
         void Date(DateTime? Date);
         //void Time(TimeOnly? Time);
+        void CurrentDate(DateTime? CurrentDate);
         void Location(string? Location);
         void DeleteItem(int id);
         int Sended_mail(int id);

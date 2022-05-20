@@ -30,28 +30,30 @@
                 </thead>
                 @foreach (var item in todos)
                 {
+                    
                     <tbody style="font-size:1.2em;">
                         <tr>
                             <td>
                                 @if (DateTime.Now < item.Date) {
                                    
-                                    <div id="ToDoItem" style="@(item.IsDone ? "color:green; text-decoration:line-through;" : "color:red")">
+                                    <div id="ToDoItem" style="@(item.IsDone ? "color:green; text-decoration:line-through;" : "color:red")" >
                                         @item.Title
+                                        
                                     </div>
                                 }
                                 else
                                 {
                                     if (item.Sended_mail == 0)
                                     {
-                                         repository.Sended_email(item.Id);
-                                      var s = Email_controller.Send_email("andr.sosn@gmail.com",item.Id);
-                                        
-                       
-                                       // if(s == true)
-                                        //{
-                                          //  repository.Sended_email(item.Id);
-                                       // }
+                                        repository.Sended_email(item.Id);
+                                        var s = Email_controller.Send_email("andr.sosn@gmail.com",item.Id);
 
+
+                                        // if(s == true)
+                                        //{
+                                        //  repository.Sended_email(item.Id);
+                                        // }
+                                       
                                     }
                                     //item.IsDone = false;
                                     <div id="ToDoItem" style="opacity:0.6; background-color:orange;">
@@ -81,9 +83,9 @@
                             </td>
                            
                              <td>  
-                                 <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="When added:">
-                                    <i class="fas fa-calendar-edit"></i>
-                                 </button>
+                                <a type="button" href="@url/@item.Id/@item.Title" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="When added: @item.CurrentDate, @item.Id = ID"   >
+                                    <i class="fas fa-calendar-edit" style="height:20px; width:20px;"></i>
+                                 </a>
                                  <button class="btn btn-danger" @onclick ="(() => DeleteToDo(item.Id))">Delete</button>
                              </td>
                              
@@ -132,6 +134,8 @@
 </div>
 
 @code {
+    [Parameter] public ToDoItem Id { get; set; }
+    [Parameter] public ToDoItem Title { get; set; }
 
     private IEnumerable<ToDoItem> todos = new List<ToDoItem>();
 
@@ -140,16 +144,21 @@
     // private TimeOnly? Time;
 
     private string? Location;
-    //private string sql = "SELECT toDoItem.Date FROM toDoItems";
 
-
+    private DateTime? CurrentDate;
+    private string url = string.Empty;
+   
     //List initializing ; to pick up all data from database
     protected override void OnInitialized()
     {
-        todos = repository.GetAllItems();
 
-        //Time = TimeOnly.FromDateTime(DateTime.Now);
+        todos = repository.GetAllItems();
+        // url = $"edit/{388}";
+        url = $"edit";
+
+        //repository.GetToDoById(id:348)
     }
+
 
     private string newTodo;
 
@@ -163,8 +172,8 @@
             //todos.Add(new ToDoItem{Title = newTodo});
             if ((Date != null)&&(Location != "0"))
             {
-                repository.AddTodo(newTodo, Date,Location);
-
+                CurrentDate = DateTime.Now;
+                repository.AddTodo(newTodo, Date, CurrentDate, Location);
             }
 
             // Clear our input
@@ -174,10 +183,8 @@
 
             Date = DateTime.Today;
 
-
         }
     }
-
 
     // If method has parameters, we use '()=>' expression
 
@@ -187,16 +194,15 @@
 
         repository.DeleteItem(id);
     }
+   
 
     private void StatusChanger(ToDoItem changedItem)
     {
         changedItem.IsDone = !changedItem.IsDone;
         repository.ValueChanged(changedItem);
-       // repository.Sended_mail(348);
-       // repository.Sended_email(changedItem.Id);
+        // repository.Sended_mail(348);
+        // repository.Sended_email(changedItem.Id);
     }
-    private void DateAnalitics(DateTime? Date)
-    {
-       // repository.selectDate(Date);
-    }
+    
+
 }

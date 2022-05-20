@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,13 +17,14 @@ namespace ToDo_List.Data.Repository
            
         }
 
-        public void AddTodo(string todoName,DateTime? NewToDodate,string? LocationItem)
+        public void AddTodo(string todoName,DateTime? NewToDodate, DateTime? NewCurrentDate, string? LocationItem)
         {
             ToDoItem newItem = new ToDoItem()
             {
                 Title = todoName,
                 IsDone = false,
                 Date = NewToDodate,
+                CurrentDate = NewCurrentDate,
                 Location = LocationItem,
             };
 
@@ -39,6 +41,11 @@ namespace ToDo_List.Data.Repository
         public void Location(string? LocationItem)
         {
             _context.Add(LocationItem);
+            _context.SaveChanges();
+        }
+        public void CurrentDate(DateTime? NewCurrentDate)
+        {
+            _context.Add(NewCurrentDate);
             _context.SaveChanges();
         }
         public int Sended_mail(int id)
@@ -89,6 +96,31 @@ namespace ToDo_List.Data.Repository
 
             _context.SaveChanges();
         }
-        
+
+        public ToDoItem GetToDoById(int id)
+        {
+            return _context.toDoItems.FirstOrDefault(b=>b.Id ==  id);
+           
+           // return _context.FirstOrDefault(id.Equals(id));
+            
+        }
+
+        public bool EditToDo(ToDoItem editedToDo)
+        {
+            var oldToDo = _context.toDoItems.Find(editedToDo.Id);
+            if (oldToDo is not null)
+            {
+                oldToDo = editedToDo;
+                _context.Attach(oldToDo);
+                _context.Entry(oldToDo).State = EntityState.Modified;
+
+                _context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
