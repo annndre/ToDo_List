@@ -12,11 +12,11 @@ namespace ToDo_List.Data.Repository
 
         ToDoItem GetToDoById(int id);
         bool EditToDo(ToDoItem editedToDo);
-        void AddTodo(string todoName,DateTime? NewToDodate, DateTime? NewCurrentDate, string? LocationItem);
+        void AddTodo(string todoName,DateTime? NewToDodate, DateTime? NewCurrentDate, string NewDuration, string? LocationItem);
         void ValueChanged(ToDoItem changedItem);
         void Date(DateTime? Date);
-        //void Time(TimeOnly? Time);
         void CurrentDate(DateTime? CurrentDate);
+        void Duration(string? Duration);
         void Location(string? Location);
         void DeleteItem(int id);
         int Sended_mail(int id);

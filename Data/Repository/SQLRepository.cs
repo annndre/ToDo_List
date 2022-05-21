@@ -17,7 +17,7 @@ namespace ToDo_List.Data.Repository
            
         }
 
-        public void AddTodo(string todoName,DateTime? NewToDodate, DateTime? NewCurrentDate, string? LocationItem)
+        public void AddTodo(string todoName,DateTime? NewToDodate, DateTime? NewCurrentDate, string? NewDuration, string? LocationItem)
         {
             ToDoItem newItem = new ToDoItem()
             {
@@ -25,6 +25,7 @@ namespace ToDo_List.Data.Repository
                 IsDone = false,
                 Date = NewToDodate,
                 CurrentDate = NewCurrentDate,
+                Duration = NewDuration,
                 Location = LocationItem,
             };
 
@@ -41,6 +42,11 @@ namespace ToDo_List.Data.Repository
         public void Location(string? LocationItem)
         {
             _context.Add(LocationItem);
+            _context.SaveChanges();
+        }
+        public void Duration(string? NewDuration)
+        {
+            _context.Add(NewDuration);
             _context.SaveChanges();
         }
         public void CurrentDate(DateTime? NewCurrentDate)
@@ -101,13 +107,13 @@ namespace ToDo_List.Data.Repository
         {
             return _context.toDoItems.FirstOrDefault(b=>b.Id ==  id);
            
-           // return _context.FirstOrDefault(id.Equals(id));
-            
+           // return _context.FirstOrDefault(id.Equals(id));    
         }
 
         public bool EditToDo(ToDoItem editedToDo)
         {
             var oldToDo = _context.toDoItems.Find(editedToDo.Id);
+            editedToDo.Sended_mail = 2;
             if (oldToDo is not null)
             {
                 oldToDo = editedToDo;

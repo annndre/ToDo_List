@@ -15,8 +15,7 @@ namespace ToDo_List.Models
         public bool IsDone { get; set; }
         public DateTime? Date { get; internal set; }
         public DateTime? CurrentDate { get;  set; }
-
-        //public TimeOnly? Time { get; internal set; }
+        public string Duration { get; set; }
         public string? Location { get; set; }
         public int Sended_mail { get; set; }
         //public void  Sended_email{get;set;}

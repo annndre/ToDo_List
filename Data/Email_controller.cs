@@ -12,15 +12,15 @@ namespace ToDo_List.Data
 {
     public class Email_controller
     {
-        public bool Send_email(string receiver, int ToDoItemId ) {
+        public bool Send_email(string receiver, int ToDoItemId, string ToDoTitle, DateTime? ToDoDate, string ToDoDuration, string ToDoLocation ) {
 
             MailMessage mail = new MailMessage();
-           SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
-             mail.From = new MailAddress("andr.sosn@gmail.com");
-             mail.To.Add(receiver);
+            mail.From = new MailAddress("andr.sosn@gmail.com");
+            mail.To.Add(receiver);
             mail.Subject = "ToDoList: Need to do";
-            mail.Body = "You have a new affair! "  + ToDoItemId ;
+            mail.Body = "You have a new affair! "  + ToDoItemId + "\n" + ToDoTitle.ToUpper() + "\n" + ToDoDate + "\n"+ ToDoDuration + "\n" + ToDoLocation;
 
             SmtpServer.Port = 587;
             SmtpServer.Credentials = new System.Net.NetworkCredential("andr.sosn@gmail.com", "dp07111946");

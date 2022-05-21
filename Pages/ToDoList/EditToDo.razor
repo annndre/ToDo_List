@@ -1,5 +1,8 @@
 ﻿@page "/edit/{ToDoId:int}"
 @page "/edit/{ToDoId:int}/{ToDoTitle}"
+@page "/edit/{ToDoId:int}/{ToDoTitle}/{ToDoDuration}"
+@page "/edit/{ToDoId:int}/{ToDoTitle}/{ToDoDuration}/{ToDoLocation}"
+
 
 @inject ToDo_List.Data.Repository.IRepository repository;
 
@@ -11,58 +14,114 @@
     </div>
    <div class="row">
     <div class="col-6">
-       @if (Title is not null)
+       @if (Editing is not null)
        {
-           <EditForm Model="Title" OnValidSubmit="Edit">
+           <EditForm Model="Editing" OnValidSubmit="Edit">
                <DataAnnotationsValidator/>
                 <div class="form-group">
                     <label>Title name:</label>
-                    @*<input type="text" value="@ToDoId" />*@
                  <div>
-                   <InputText class="form-control" @bind-Value="Title.Title" />
-                   <ValidationMessage For="(() => Title.Title)" />
+                   <InputText class="form-control" @bind-Value="Editing.Title" />
+                   <ValidationMessage For="(() => Editing.Title)" />
                  </div>
-               <div class="row">
-                <div class="form-group">
-                    <label>Time:</label>
-                    <input type="datetime-local"/>
-                </div>
                </div>
-             </div>
+               <p></p>
+                 <div class="form-group">
+                    <label>Time:</label>
+                  <div>
+                    <input type="datetime-local" class="form-control" @bind-value="Editing.Date"  min="@DateTime.Now.ToString(format:"yyyy-MM-ddTHH:mm")"/>
+                  </div>
+                 </div>
+               <p></p>
+               <div class="form-group">
+                   <label>Duration:</label>
+                   <div>
+                       <InputSelect class="form-control" @bind-Value="Editing.Duration">
+                           <option>10 min</option>
+                           <option>30 min</option>
+                           <option>1 hr</option>
+                           <option>2 hr</option>
+                           <option>3 hr</option>
+                           <option>4 hr</option>
+                           <option>10 hr</option>
+                           <option>1 day</option>
+                           <option>5 days</option>
+                           <option>One week</option>
+                           <option>One month</option>
+                       </InputSelect>
+                       <ValidationMessage For = "(()=>Editing.Duration)"/>
+                   </div>
+               </div>
+               <p></p>
+                 <div class="form-group">
+                    <label>Location:</label>
+                    <div> 
+                        <InputSelect class="form-control" @bind-Value="Editing.Location">
+                            <option>Home</option>
+                            <option>University</option>
+                            <option>School</option>
+                            <option>My district</option>
+                            <option>Village</option>
+                            <option>City center</option>
+                            <option>Another country</option>
+                         </InputSelect>
+                        <ValidationMessage For="(()=> Editing.Location)"/>
+                      </div>
+                 </div>
+                <p></p>
+                 <div class="form-group">
+                      <label>Make as done</label>
+                     <InputCheckbox id="checkbox" @bind-Value="Editing.IsDone"/>
+                  </div>
             <div style="margin:10px;">
-              <button class="btn btn-outline-success" @onclick="(()=>UpdateToDo())">Save</button>
+                @if(Editing.Title.Length == 0)
+                {
+                       <button class="btn btn-outline-success" disabled="disabled">Save</button>
+                }
+                 else
+                 {
+                       <button class="btn btn-outline-success" @onclick="(()=>UpdateToDo())" >Save</button>      
+                 }
+                     <a type="button" href="https://localhost:7040/todo" class="btn btn-outline-primary" style="margin:10px">ToDoList</a>
             </div>
            </EditForm>
        }
         </div>
-     <div class="col-6">
+      </div>
+     <div class="row">
             
                 <div class="text-align-content-center py-2 @cssClass">@message</div>
                 @foreach(var item in todos)
                 {
                     <div class="row justify-content-center m-1 text-white">
-                        <div class="col-6 bg-info">
-                            ID: @item.Id
+                        <div class="col bg-info">
+                            <h5><span class="text-secondary">ID:</span> @item.Id</h5>
                         </div>
-                        <div class="col-6 bg-info">
-                            Title:@item.Title
+                        <div class="col bg-info">
+                            <h5><span class="text-secondary">Title:</span> @item.Title</h5>
                         </div>
-                    </div>
-            }
+                        <div class="col bg-info">
+                            <h5><span class="text-secondary">Date&Time:</span> @item.Date</h5>
+                        </div>
+                        <div class="col bg-info">
+                            <h5><span class="text-secondary">Duration:</span> @item.Duration</h5>
+                        </div>
+                        <div class="col bg-info">
+                           <h5><span class="text-secondary">Location:</span> @item.Location</h5>
+                        </div>
+                    </div>     
+                }
         </div>
-    </div>
-</div>
-
+ </div>
+  
 @code {
     [Parameter] public int ToDoId { get; set; }
     [Parameter] public string ToDoTitle { get; set; }
+    [Parameter] public DateTime? ToDoDateTime { get; set; }
+    [Parameter] public string? ToDoDuration { get; set; }
+    [Parameter] public string? ToDoLocation { get; set; }
 
-    ToDoItem Title = new();
-
-    //public EditToDo(ToDoItem ToDoTitle)
-    //{
-    //    Title = ToDoTitle;
-    //}
+    ToDoItem Editing = new();
 
     string message = string.Empty;
     string cssClass = string.Empty;
@@ -72,20 +131,19 @@
 
     protected override void OnInitialized()
     {
-        Title = repository.GetToDoById(ToDoId);
+        Editing = repository.GetToDoById(ToDoId);
        
     }
 
     void Edit()
     {
         
-        var result = repository.EditToDo(Title);
+        var result = repository.EditToDo(Editing);
         if (result == true)
         {
             cssClass = "alert alert-success";
             message = "Editing success!";
             UpdateToDo();
-            //Console.WriteLine(Title);
         }
         else
         {
@@ -96,7 +154,6 @@
     }
     void UpdateToDo()
     {
-        //IEnumerable<ToDoItem> todos = new List<ToDoItem>();
         todos = new List<ToDoItem>();
         todos = repository.GetAllItems();
     }
