@@ -17,7 +17,7 @@
             <h2 class="text-center text-primary">Still needs to be done (@todos.Count(item => !item.IsDone))</h2>
             <h3 class="text-left">Progress in your affairs</h3>
             <progress id="ToDoProgress" max="@todos.ToArray().Length" value="@todos.Count(item => item.IsDone)"> </progress>
-
+            
             <table class = "table table-striped">
                 <thead class = "table-dark" style="font-size:1.4em;">
                     <tr>

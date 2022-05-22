@@ -25,15 +25,15 @@
                    <ValidationMessage For="(() => Editing.Title)" />
                  </div>
                </div>
-               <p></p>
-                 <div class="form-group">
+               
+                 <div class="form-group mb-2">
                     <label>Time:</label>
                   <div>
                     <input type="datetime-local" class="form-control" @bind-value="Editing.Date"  min="@DateTime.Now.ToString(format:"yyyy-MM-ddTHH:mm")"/>
                   </div>
                  </div>
-               <p></p>
-               <div class="form-group">
+               
+               <div class="form-group mb-2">
                    <label>Duration:</label>
                    <div>
                        <InputSelect class="form-control" @bind-Value="Editing.Duration">
@@ -52,8 +52,8 @@
                        <ValidationMessage For = "(()=>Editing.Duration)"/>
                    </div>
                </div>
-               <p></p>
-                 <div class="form-group">
+               
+                 <div class="form-group mb-2">
                     <label>Location:</label>
                     <div> 
                         <InputSelect class="form-control" @bind-Value="Editing.Location">
@@ -68,8 +68,8 @@
                         <ValidationMessage For="(()=> Editing.Location)"/>
                       </div>
                  </div>
-                <p></p>
-                 <div class="form-group">
+                
+                 <div class="form-group mb-2">
                       <label>Make as done</label>
                      <InputCheckbox id="checkbox" @bind-Value="Editing.IsDone"/>
                   </div>

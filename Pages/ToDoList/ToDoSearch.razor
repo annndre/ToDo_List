@@ -1,0 +1,150 @@
+﻿@page "/todo/search"
+@inject ToDo_List.Data.Repository.IRepository repository;
+
+
+<div class="row">
+    <div class="col">
+        <h1 class="text-info">Search ToDo</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-col-sm-12 col-md-6">
+        <input type="text" class="form-control mb-2" placeholder = "Enter ToDo name" @bind-value="ToDoName" @bind-value:event="oninput"
+                                                                                     @onkeypress="((KeyboardEventArgs args) => ToDoNameKeyPressHandler(args))"/>
+      
+    <select class="form-control mb-2" @bind="SearchDate">
+        <option value="-1">-- Select Date --</option>
+        @foreach(var item in todos)
+        {
+            <option value="@item.Date">@item.Date</option>
+        }
+    </select>
+     <select class="form-control mb-2" @bind="selectedToDoTitle">
+        <option value="-1">-- Select ToDo Location --</option>
+        @foreach(var item in todos)
+        {
+            <option value="@item.Location">@item.Location</option>
+        }
+    </select>
+      <div class="row mb-2">
+          <div class="col">
+              <div class="custom-control custom-checkbox ">
+                  <input type = "checkbox" class = "custom-control-input" id = "checkbox" @bind = "AffairsForTheFuture" />
+                  <label class="custom-control-label" for="durationId"> Affairs for the nearest future </label>
+              </div>
+          </div>
+           <div class="col">
+              <div class="custom-control custom-checkbox ">
+                  <input type = "checkbox" class = "custom-control-input" id = "checkbox" @bind = "IsDone" />
+                  <label class="custom-control-label" for="IsDoneId"> Not done yet </label>
+              </div>
+          </div>
+      </div>
+      <button type="button" class="btn btn-outline-primary form-control mb-2" @onclick="SearchToDo">Search ToDo</button>
+      <button type="button" class="btn btn-outline-danger form-control mb-2" @onclick="ResetValues">Reset</button>
+   </div>
+   
+    <div class="col-col-sm-12 col-md-6">
+        <div class="border border-primary rounded p-4">
+            <p>ToDo enter: @ToDoName </p>
+            <p>ToDo Title: @selectedToDoTitle </p>
+            <p>Date&Time: @SearchDate </p>
+            <p>ToDo location: @SearchLocation </p>
+        </div>
+    </div>
+</div>
+<div class="border border-success rounded p-3 my-3 mx-1">
+   
+        <div class="row">
+
+            <div class="text-align-content-center py-2 "></div>
+            @foreach (var item in todos)
+            {
+                <div class="row justify-content-center m-1 text-white">
+                    <div class="col bg-info">
+                            <h5><span class="text-secondary">ID:</span> @item.Id</h5>
+                        </div>
+                        <div class="col bg-info">
+                            <h5><span class="text-secondary">Title:</span> @item.Title</h5>
+                        </div>
+                        <div class="col bg-info">
+                            <h5><span class="text-secondary">IsDone:</span> @item.IsDone</h5>
+                        </div>
+                        <div class="col bg-info">
+                            <h5><span class="text-secondary">Date&Time:</span> @item.Date</h5>
+                        </div>
+                        <div class="col bg-info">
+                            <h5><span class="text-secondary">Duration:</span> @item.Duration</h5>
+                        </div>
+                        <div class="col bg-info">
+                           <h5><span class="text-secondary">Location:</span> @item.Location</h5>
+                        </div>
+                    </div>     
+                }
+        </div>
+</div>
+
+@code {
+    string ToDoName = string.Empty;
+    string selectedToDoTitle = "-1";
+    string SearchDate = "-1";
+    string SearchLocation = "-1";
+    bool AffairsForTheFuture = false;
+    bool IsDone = false;
+
+    ToDoItem ToDoLocations = new();
+
+    IEnumerable<ToDoItem> todos = new List<ToDoItem>();
+
+    void ToDoNameKeyPressHandler(KeyboardEventArgs args)
+    {
+        //if(args.Key == "Enter")
+        //{
+
+    //}
+    }
+
+    protected override void OnInitialized()
+    {
+        todos = repository.GetAllItems();
+
+    }
+
+    void SearchToDo()
+    {
+        todos = repository.GetAllItems();
+        if (!string.IsNullOrWhiteSpace(ToDoName))
+        {
+            todos = todos.Where(x => x.Title.ToLower().Contains(ToDoName)).ToList();
+        }
+        if(selectedToDoTitle != "-1")
+        {
+            todos = todos.Where(x => x.Id.ToString().Equals(selectedToDoTitle)).ToList();
+        }     
+        if(AffairsForTheFuture == true)
+        {
+            todos = todos.Where(x => x.Date > DateTime.Now).ToList();
+        }
+        if(IsDone == true)
+        {
+            todos = todos.Where(x => x.IsDone == false).ToList();
+        }
+        if(SearchDate != "-1")
+        {
+            todos = todos.Where(x => x.Date.ToString() == SearchDate).ToList();
+        }
+    }
+
+
+    void ResetValues()
+    {
+        ToDoName = string.Empty;
+        selectedToDoTitle = "-1";
+        SearchDate = "-1";
+        SearchLocation = "-1";
+        AffairsForTheFuture = false;
+        IsDone = false;
+        todos = new List<ToDoItem>();
+    }
+}

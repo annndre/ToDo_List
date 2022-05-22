@@ -1,0 +1,52 @@
+﻿@page "/todo/to_do_for_today"
+@inject ToDo_List.Data.Repository.IRepository repository;
+
+<h3 class="text-center">ToDo For Today</h3>
+<div class="container-fluid">
+
+     @if (ToDoToday.Date.ToString().Contains(DateTime.Today.ToString(format:"yyyy-MM-dd")))
+    {
+       
+        <div class="row">
+            <div class="text-align-content-center py-2 "></div>
+            @foreach (var item in todos)
+            {
+                <div class="row justify-content-center m-1 text-white">
+                    <div class="col bg-info">
+                        <h5><span class="text-secondary">ID:</span> @item.Id</h5>
+                    </div>
+                    <div class="col bg-info">
+                        <h5><span class="text-secondary">Title:</span> @item.Title</h5>
+                    </div>
+                    <div class="col bg-info">
+                        <h5><span class="text-secondary">IsDone:</span> @item.IsDone</h5>
+                    </div>
+                    <div class="col bg-info">
+                        <h5><span class="text-secondary">Date&Time:</span> @item.Date</h5>
+                    </div>
+                    <div class="col bg-info">
+                        <h5><span class="text-secondary">Duration:</span> @item.Duration</h5>
+                    </div>
+                    <div class="col bg-info">
+                        <h5><span class="text-secondary">Location:</span> @item.Location</h5>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+</div>
+
+@code {
+    ToDoItem ToDoToday = new();
+
+    IEnumerable<ToDoItem> todos = new List<ToDoItem>();
+    string today = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        todos = repository.GetAllItems();
+    }
+
+   
+  }

@@ -39,6 +39,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVG9Eb0xpc3RcRWRpdFRvRG8ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/vs code 2022/C\# project/ToDo_List/Pages/ToDoList/ToDoForToday.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVG9Eb0xpc3RcVG9Eb0ZvclRvZGF5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/vs code 2022/C\# project/ToDo_List/Pages/ToDoList/ToDoSearch.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVG9Eb0xpc3RcVG9Eb1NlYXJjaC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/vs code 2022/C\# project/ToDo_List/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
