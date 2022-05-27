@@ -4,13 +4,16 @@
 
 @inject ToDo_List.Data.Email_controller Email_controller;
 
+
 <div class = "container-fluid">
 
-       <div hidden class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-
+    @if (!string.IsNullOrWhiteSpace(AlertMessage))
+    {
+            <div class="@CSS"><strong>@AlertMessage</strong>
+                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+    }
+   
     <div class = "row">
         <div class="col">
             <h1 class="text-center">ToDo</h1>
@@ -31,13 +34,12 @@
                 </thead>
                 @foreach (var item in todos)
                 {
-                    
                     <tbody style="font-size:1.2em;">
                         <tr>
                             <td>
                                 @if (DateTime.Now < item.Date) {
                                    
-                                    <div id="ToDoItem" style="@(item.IsDone ? "color:green; text-decoration:line-through;" : "color:red")" >
+                                    <div id="ToDoItem" style="@(item.IsDone ? "color: green; text-decoration:line-through;" : "color:red")" >
                                         @item.Title
                                         
                                     </div>
@@ -157,8 +159,12 @@
 
     private DateTime? CurrentDate;
 
+    private string AlertMessage = string.Empty;
+
+    private string CSS = "alert alert-primary alert-dismissible fade show";
+
     private string url = string.Empty;
-   
+
     //List initializing ; to pick up all data from database
     protected override void OnInitialized()
     {
@@ -166,8 +172,6 @@
         todos = repository.GetAllItems();
         // url = $"edit/{388}";
         url = $"edit";
-
-        //repository.GetToDoById(id:348)
     }
 
     private void AddTodo()
@@ -177,29 +181,34 @@
 
             // Adding new task to list
 
-            //todos.Add(new ToDoItem{Title = newTodo});
             if ((Date != null)&&(Duration is not null)&&(Location is not null))
             {
                 CurrentDate = DateTime.Now;
+                
+                foreach(var todo in todos)
+                {
+                    if (todo.Date.ToString().Contains(Date.ToString().Substring(0,13)))
+                    {
+                        AlertMessage = "You have an overlay! Please, choose another date.";
+                    }
+                    else 
+                    {
+                        AlertMessage = "New ToDo has been added!";
+                    }
+                }
                 repository.AddTodo(newTodo, Date, CurrentDate, Duration, Location);
+               
             }
-
-            // Clear our input
+            
             newTodo = string.Empty;
-
-            // Set the current Date again
 
             Date = DateTime.Today;
 
         }
     }
 
-    // If method has parameters, we use '()=>' expression
-
     private void DeleteToDo(int id)
     {
-        //todos.Remove(deletedItem);
-
         repository.DeleteItem(id);
     }
    

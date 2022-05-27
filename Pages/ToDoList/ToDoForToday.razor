@@ -1,28 +1,35 @@
 ﻿@page "/todo/to_do_for_today"
 @inject ToDo_List.Data.Repository.IRepository repository;
+@*@inject ToDo_List.Data.File_controller File_controller;*@
+@inject IJSRuntime iJSRuntime;
+
+@using NPOI.SS.UserModel;
+@using NPOI.XSSF.UserModel;
+@using System.IO;
+@using ToDo_List.Data;
+
 
 <h3 class="text-center">ToDo For Today</h3>
 <div class="container-fluid">
 
-     @if (ToDoToday.Date.ToString().Contains(DateTime.Today.ToString(format:"yyyy-MM-dd")))
-    {
-       
-        <div class="row">
-            <div class="text-align-content-center py-2 "></div>
+        <div class="row mb-2">
+        
+        <div class="text-align-content-center py-2 "></div>
             @foreach (var item in todos)
             {
+                if((item.Date.ToString().Contains(DateTime.Today.ToString(format:"dd.MM.yyyy"))))
+                {
+
                 <div class="row justify-content-center m-1 text-white">
-                    <div class="col bg-info">
-                        <h5><span class="text-secondary">ID:</span> @item.Id</h5>
-                    </div>
                     <div class="col bg-info">
                         <h5><span class="text-secondary">Title:</span> @item.Title</h5>
                     </div>
                     <div class="col bg-info">
                         <h5><span class="text-secondary">IsDone:</span> @item.IsDone</h5>
                     </div>
+                         
                     <div class="col bg-info">
-                        <h5><span class="text-secondary">Date&Time:</span> @item.Date</h5>
+                        <h5><span class="text-secondary">Date&Time:</span>@item.Date</h5>
                     </div>
                     <div class="col bg-info">
                         <h5><span class="text-secondary">Duration:</span> @item.Duration</h5>
@@ -31,16 +38,20 @@
                         <h5><span class="text-secondary">Location:</span> @item.Location</h5>
                     </div>
                 </div>
-            }
-
+          }
+        }
         </div>
-    }
-</div>
+        <div class="bg-dark mb-2 hideWhenPrint">
+            <button class="btn btn-primary" @onclick="@(async()=> {await GenerateExcel();})">Create Excel table</button>
+             <button class="btn btn-primary" @onclick="Print">Save to PDF</button>
+        </div>
+    </div>
 
 @code {
     ToDoItem ToDoToday = new();
 
     IEnumerable<ToDoItem> todos = new List<ToDoItem>();
+
     string today = string.Empty;
 
     protected override void OnInitialized()
@@ -48,5 +59,78 @@
         todos = repository.GetAllItems();
     }
 
-   
+    public async Task GenerateExcel()
+    {
+
+        IWorkbook workbook = new XSSFWorkbook();
+
+        var dataFormat = workbook.CreateDataFormat();
+        var dataStyle = workbook.CreateCellStyle();
+        dataStyle.DataFormat = dataFormat.GetFormat("MM/dd/yyyy HH:mm:ss");
+
+        ISheet worksheet = workbook.CreateSheet("Sheet1");
+
+        int rowNumber = 0;
+        IRow row = worksheet.CreateRow(rowNumber++);
+
+        // Table header
+        ICell cell = row.CreateCell(0);
+        cell.SetCellValue("ToDoId");
+
+        cell = row.CreateCell(1);
+        cell.SetCellValue("Title");
+
+        cell = row.CreateCell(2);
+        cell.SetCellValue("IsDone");
+
+        cell = row.CreateCell(3);
+        cell.SetCellValue("Date");
+
+        cell = row.CreateCell(4);
+        cell.SetCellValue("Duration");
+
+        cell = row.CreateCell(5);
+        cell.SetCellValue("Location");
+
+        // Table Body
+        foreach (var todo in todos)
+        {
+            if((todo.Date.ToString().Contains(DateTime.Today.ToString(format:"dd.MM.yyyy"))))
+                {
+            row = worksheet.CreateRow(rowNumber++);
+
+            cell = row.CreateCell(0);
+            cell.SetCellValue(todo.Id);
+
+            cell = row.CreateCell(1);
+            cell.SetCellValue(todo.Title);
+
+            cell = row.CreateCell(2);
+            cell.SetCellValue(todo.IsDone);
+
+            cell = row.CreateCell(3);
+            cell.SetCellValue(todo.Date.ToString());
+
+            cell = row.CreateCell(4);
+            cell.SetCellValue(todo.Duration);
+
+            cell = row.CreateCell(5);
+            cell.SetCellValue(todo.Location);
+                }
+        }
+
+        MemoryStream ms = new MemoryStream();
+        workbook.Write(ms);
+        byte[] bytes = ms.ToArray();
+        ms.Close();
+
+        await iJSRuntime.SaveAsFileAsync("ToDo List", bytes, "application/vnd.ms-excel");
+
+    }
+
+    private void Print()
+    {
+        iJSRuntime.InvokeVoidAsync("Print");
+    }
+
   }

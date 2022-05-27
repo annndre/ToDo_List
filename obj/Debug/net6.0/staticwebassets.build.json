@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "kDGAAeVjNOYYi1wPf98ltTxuM2APTVcChKtc290sUjw=",
+  "Hash": "B/nD5Bbgjylres+Rfu6mnCzV8U2gp/iGH/eZsp16gMg=",
   "Source": "ToDo_List",
   "BasePath": "_content/ToDo_List",
   "Mode": "Default",
@@ -304,6 +304,57 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\JS\\ButtonListener.js"
+    },
+    {
+      "Identity": "C:\\vs code 2022\\C# project\\ToDo_List\\wwwroot\\JS\\jquery\\jquery.min.js",
+      "SourceId": "ToDo_List",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\vs code 2022\\C# project\\ToDo_List\\wwwroot\\",
+      "BasePath": "_content/ToDo_List",
+      "RelativePath": "JS/jquery/jquery.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\JS\\jquery\\jquery.min.js"
+    },
+    {
+      "Identity": "C:\\vs code 2022\\C# project\\ToDo_List\\wwwroot\\JS\\PrintPDF.js",
+      "SourceId": "ToDo_List",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\vs code 2022\\C# project\\ToDo_List\\wwwroot\\",
+      "BasePath": "_content/ToDo_List",
+      "RelativePath": "JS/PrintPDF.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\JS\\PrintPDF.js"
+    },
+    {
+      "Identity": "C:\\vs code 2022\\C# project\\ToDo_List\\wwwroot\\JS\\SaveAsFile.js",
+      "SourceId": "ToDo_List",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\vs code 2022\\C# project\\ToDo_List\\wwwroot\\",
+      "BasePath": "_content/ToDo_List",
+      "RelativePath": "JS/SaveAsFile.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\JS\\SaveAsFile.js"
     }
   ]
 }

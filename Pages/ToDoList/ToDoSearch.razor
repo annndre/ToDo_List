@@ -20,7 +20,7 @@
             <option value="@item.Date">@item.Date</option>
         }
     </select>
-     <select class="form-control mb-2" @bind="selectedToDoTitle">
+     <select class="form-control mb-2" @bind="SearchLocation">
         <option value="-1">-- Select ToDo Location --</option>
         @foreach(var item in todos)
         {
@@ -48,7 +48,7 @@
     <div class="col-col-sm-12 col-md-6">
         <div class="border border-primary rounded p-4">
             <p>ToDo enter: @ToDoName </p>
-            <p>ToDo Title: @selectedToDoTitle </p>
+            <p>ToDo Title: @selectedToDoTitle</p>
             <p>Date&Time: @SearchDate </p>
             <p>ToDo location: @SearchLocation </p>
         </div>
@@ -58,7 +58,7 @@
    
         <div class="row">
 
-            <div class="text-align-content-center py-2 "></div>
+            <div class="text-align-content-center py-2 " ></div>
             @foreach (var item in todos)
             {
                 <div class="row justify-content-center m-1 text-white">
@@ -113,7 +113,7 @@
 
     void SearchToDo()
     {
-        todos = repository.GetAllItems();
+         todos = repository.GetAllItems();
         if (!string.IsNullOrWhiteSpace(ToDoName))
         {
             todos = todos.Where(x => x.Title.ToLower().Contains(ToDoName)).ToList();
@@ -133,6 +133,10 @@
         if(SearchDate != "-1")
         {
             todos = todos.Where(x => x.Date.ToString() == SearchDate).ToList();
+        }
+         if(SearchLocation != "-1")
+        {
+            todos = todos.Where(x => x.Location.ToString() == SearchLocation).ToList();
         }
     }
 

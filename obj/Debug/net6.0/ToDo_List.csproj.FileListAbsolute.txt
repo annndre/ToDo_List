@@ -60,3 +60,14 @@ C:\vs code 2022\C# project\ToDo_List\bin\Debug\net6.0\runtimes\win\lib\netstanda
 C:\vs code 2022\C# project\ToDo_List\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\vs code 2022\C# project\ToDo_List\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\vs code 2022\C# project\ToDo_List\obj\Debug\net6.0\ToDo_List.csproj.CopyComplete
+C:\vs code 2022\C# project\ToDo_List\bin\Debug\net6.0\EPPlus.dll
+C:\vs code 2022\C# project\ToDo_List\bin\Debug\net6.0\EPPlus.Interfaces.dll
+C:\vs code 2022\C# project\ToDo_List\bin\Debug\net6.0\EPPlus.System.Drawing.dll
+C:\vs code 2022\C# project\ToDo_List\bin\Debug\net6.0\Microsoft.IO.RecyclableMemoryStream.dll
+C:\vs code 2022\C# project\ToDo_List\bin\Debug\net6.0\libman.json
+C:\vs code 2022\C# project\ToDo_List\bin\Debug\net6.0\NPOI.OOXML.dll
+C:\vs code 2022\C# project\ToDo_List\bin\Debug\net6.0\NPOI.OpenXml4Net.dll
+C:\vs code 2022\C# project\ToDo_List\bin\Debug\net6.0\NPOI.OpenXmlFormats.dll
+C:\vs code 2022\C# project\ToDo_List\bin\Debug\net6.0\NPOI.dll
+C:\vs code 2022\C# project\ToDo_List\bin\Debug\net6.0\BouncyCastle.Crypto.dll
+C:\vs code 2022\C# project\ToDo_List\bin\Debug\net6.0\ICSharpCode.SharpZipLib.dll

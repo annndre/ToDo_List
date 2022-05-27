@@ -60,5 +60,13 @@ function LocationSelection() {
 
         LocationOption.value = 1;
         DurationOption.value = 1;
-    }
+}
+
+function HideAlert() {
+    var alert = document.getElementById('Alert');
+
+    window.setTimeout(function () {
+        alert.setAttribute("hidden", "hidden");
+    }, 5000);
+}
 
